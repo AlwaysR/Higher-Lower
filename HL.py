@@ -1,4 +1,12 @@
 import random
+import math
+
+def calc_guesses(low, high):
+    num_range = high - low + 1
+    max_raw = math.log2(num_range)
+    max_upped = math.ceil(max_raw)
+    max_guesses = max_upped + 1
+    return max_guesses
 
 def instruction():
     print("""
@@ -74,7 +82,6 @@ print()
 #Variables
 mode = "normal"
 round_number = 0
-rounds_wanted_noninfinite = ""
 history = []
 chicken = "no"
 guess = ""
@@ -90,5 +97,7 @@ if wanted_rounds == "":
 
 low_num = int_check("Low Number? ")
 high_num = int_check("High Number? ", low=low_num+1)
+guesses_allowed = calc_guesses(low_num, high_num)
 
 while rounds_played < round_number or mode == "infinite":
+    
