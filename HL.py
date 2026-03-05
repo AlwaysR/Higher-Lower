@@ -26,22 +26,45 @@ def string_checker(question, valid_ans=("yes", "no")):
         print(error)
         print()
 
-def int_check(questionint, error):
+def int_check(questionint, low=None, high=None, exit_code=None):
 
     while True:
-        try:
-            response = input(questionint)
             
-            response = int(response)
-            if response < 1:
-                print(error)
-            else:
-                return response
+        if low is None and high is None:
+            error = "Please enter an integer"
 
-        except ValueError:
-            if len(response) == 0:
-                return "enter"
-            print(error)
+        elif low is not None and high is None:
+            error = (f"Please enter an integer that is more than or equal to {low}")
+
+        else:
+            error = (f"Please enter an integer that is between {low} and {high}. (Inclusive)")
+
+
+        while True:
+            responseint = input(questionint).lower()
+
+            if responseint == exit_code:
+                return responseint
+
+            try:
+                responseint = int(responseint)
+
+                if low is not None and responseint < low:
+                    print(error)
+
+                elif high is not None and responseint > high:
+                    print(error)
+
+                else:
+                    return responseint
+
+            except ValueError:
+                print(error)
+
+
+
+
+
 
 #Main code
 print()
@@ -54,43 +77,18 @@ round_number = 0
 rounds_wanted_noninfinite = ""
 history = []
 chicken = "no"
-selection = 0
+guess = ""
 
 want_instructions = string_checker("Do you want to see the instructions? ")
 if want_instructions == "yes":
     instruction()
 
-wanted_rounds = int_check("\nHow many rounds? (Press <enter> for infinite): ", "Please press <enter> for infinite mode or enter a number")
+wanted_rounds = int_check("\nHow many rounds? (Press <enter> for infinite): ", low=1, exit_code="")
 
-#looping rounds
-if wanted_rounds == "enter":
-    mode = "Infinite"
-    wanted_rounds = 1
+if wanted_rounds == "":
+    mode = "infinite"
 
-else:
-    mode = "Normal"
-    rounds_wanted_noninfinite = f"of {wanted_rounds}"
+low_num = int_check("Low Number? ")
+high_num = int_check("High Number? ", low=low_num+1)
 
-
-while round_number < wanted_rounds or mode == "Infinite":
-    print(f"\n*** Round {round_number + 1} {rounds_wanted_noninfinite}| {mode} mode ***\n")
-
-    if selection == "xxx":
-        break
-
-    round_number += 1
-
-    round_feedback = ""
-    history_item = ""
-    history.append(history_item)
-if round_number == 0:
-    chicken = "yes"
-    print("You chickened out and didnt play any rounds in infinite mode.")
-
-if chicken == "no":
-    display_history = string_checker("Do you want to see your game history? ")
-    if display_history == "yes":
-        print("Statistics:")
-
-
-    print("Thank you for playing!")
+while rounds_played < round_number or mode == "infinite":
