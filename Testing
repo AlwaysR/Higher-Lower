@@ -1,22 +1,47 @@
-import math
+def int_check(questionint, low=None, high=None, exit_code=None):
 
-def calc_guesses(low, high):
-    pass
+    while True:
+            
+        if low is None and high is None:
+            error = "Please enter an integer"
 
-to_test = [
-    (1, 10, 5),
-    (1, 20 ,6),
-    (1, 100, 8),
-    (1, 1000, 11),
-]
+        elif low is not None and high is None:
+            error = (f"Please enter an integer that is more than or equal to {low}")
 
-for item in to_test:
-    low_num = item[0]
-    high_num = item[1]
-    expected = item[2]
+        else:
+            error = (f"Please enter an integer that is between {low} and {high}. (Inclusive)")
 
-    actual = calc_guesses(low_num, high_num)
 
-    if actual = expected:
+        while True:
+            responseint = input(questionint).lower()
 
-#53secs into ep28
+            if responseint == exit_code:
+                return responseint
+
+            try:
+                responseint = int(responseint)
+
+                if low is not None and responseint < low:
+                    print(error)
+
+                elif high is not None and responseint > high:
+                    print(error)
+
+                else:
+                    return responseint
+
+            except ValueError:
+                print(error)
+
+guess = ""
+while guess != secret:
+    guess = int(input("Guess: "))
+    if guess in already guessed:
+        print(f"You've
+    
+low_num = 0
+high_num = 10
+guesses_allowed = 5
+secret = 7
+
+#10secs into 29
